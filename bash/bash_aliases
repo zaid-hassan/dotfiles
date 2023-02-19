@@ -1,0 +1,31 @@
+# some aliases
+alias pr='cd /home/zaid/programming_playground/'
+alias prc='cd /home/zaid/programming_playground/C_Programmes/'
+alias prcp='cd /home/zaid/programming_playground/cpp_programmes'
+alias prp='cd /home/zaid/programming_playground/python_programmes'
+alias acf='auto-cpufreq --stats'
+alias cls='clear && ls'
+alias glogout='gnome-session-quit --logout --no-prompt'
+alias neofetch='neofetch --source /home/zaid/.custom/ub.txt'
+alias balenaetcher='./balenaEtcher-1.14.3-x64.AppImage --no-sandbox --disable-gpu-sandbox --disable-seccomp-filter-sandbox'
+
+# Compile C program with an output file name
+function c {
+	gcc -o $1 $1.c
+}
+
+# Compile CPP program with an output file name
+function cpp {
+	g++ -o $1 $1.cpp
+}
+
+# Notes
+function note {
+	savelocn="drafts.txt"
+	echo "Date: $(date)" >> $HOME/$savelocn
+	echo "$@" >> $HOME/$savelocn
+	echo "" >> $HOME/$savelocn
+}
+
+# Nvim
+alias nvim='$HOME/nvim-linux64/bin/nvim'
