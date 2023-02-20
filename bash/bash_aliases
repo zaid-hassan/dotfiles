@@ -6,7 +6,7 @@ alias prp='cd /home/zaid/programming_playground/python_programmes'
 alias acf='auto-cpufreq --stats'
 alias cls='clear && ls'
 alias glogout='gnome-session-quit --logout --no-prompt'
-alias neofetch='neofetch --source /home/zaid/.custom/ub.txt'
+alias neofetch='neofetch --source $HOME/.custom/ub3d.txt'
 alias balenaetcher='./balenaEtcher-1.14.3-x64.AppImage --no-sandbox --disable-gpu-sandbox --disable-seccomp-filter-sandbox'
 
 # Compile C program with an output file name
