@@ -27,5 +27,17 @@ function note {
 	echo "" >> $HOME/$savelocn
 }
 
+# Diary
+function diary {
+    savelocn=".diary/.diary.txt"
+    echo "Date: $(date '+%a-%d-%b-%Y %r')" >> $HOME/$savelocn
+    echo "$@" >> $HOME/$savelocn
+    echo "" >> $HOME/$savelocn
+}
+
+# Mirroring android screen to linux
+alias mirroratl='scrcpy -K'
+
+
 # Nvim
 alias nvim='$HOME/nvim-linux64/bin/nvim'
