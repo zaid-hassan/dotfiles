@@ -9,17 +9,11 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-# _ _______        ____  __
-#(_)___ /\ \      / /  \/  |
-#| | |_ \ \ \ /\ / /| |\/| |    +-+-+-+-+ +-+-+-+-+-+-+
-#| |___) | \ V  V / | |  | |    |z|a|i|d| |h|a|s|s|a|n|
-#|_|____/   \_/\_/  |_|  |_|    +-+-+-+-+ +-+-+-+-+-+-+
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Hack Nerd Font 8
+font pango:monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -47,20 +41,16 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# To set brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
-
 # start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Return exec kitty
 
 # kill focused window
-bindsym $mod+shift+q kill
+bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-#bindsym $mod+d exec --no-startup-id dmenu_run -nb '#1e1e1e' -sf '#1e1e1e' -sb '#FBF1C7' -nf '#FBF1C7' 
+bindsym $mod+d exec dmenu_run -nb '#1e1e1e' -sf '#1e1e1e' -sb '#FBF1C7' -nf '#FBF1C7' 
 # A more modern dmenu replacement is rofi:
-bindsym $mod+d exec "rofi -modi drun,run -show drun"
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
@@ -68,7 +58,7 @@ bindsym $mod+d exec "rofi -modi drun,run -show drun"
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
-bindsym $mod+l focus up
+#bindsym $mod+l focus up
 bindsym $mod+scedilla focus right
 
 # alternatively, you can use the cursor keys:
@@ -157,7 +147,10 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nag
+
+
+bar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -186,11 +179,18 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# i3-gaps
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        status_command i3status
+}
+
+
 gaps inner 5
-gaps outer 5
-smart_gaps inverse_outer
-default_border pixel 1
+gaps outer 1
+smart_gaps on
+
+default_border pixel 2
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #FBF1C7 #282828 #ffffff #FBF1C7   #FBF1C7
@@ -201,28 +201,25 @@ client.placeholder      #282828 #0c0c0c #ffffff #2828287   #FBF1C7
 
 client.background       #ffffff1
  
+bindsym Print exec xfce4-screenshooter 
+bindsym shift+Print exec xfce4-screenshooter -r
+bindsym XF86AudioPlay exec --no-startup-id "playerctl play-pause" 
+
+#brighness control
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 1 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 1 # decrease screen brightness
+
 # switch/iterate between workspaces
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 
-# Application shortcuts
-bindsym $mod+c exec --no-startup-id code
-bindsym $mod+x exec --no-startup-id nautilus
-bindsym $mod+b exec --no-startup-id chromium
 
 
-exec --no-startup-id picom --config ~/.config/picom/picom.conf
-exec_always --no-startup-id  ~/.config/polybar/launch.sh
+exec_always --no-startup-id bash ~/.config/polybar/launch.sh --forest
 exec_always --no-startup-id compton --vsync opengl-swc --backend glx
-bindsym  $mod+Ctrl+l exec --no-startup-id i3lock -i ~/.i3/leaf-wallpaper-lock.png -e -f
+bindsym $mod+n exec thunar
+bindsym $mod+shift+n exec kitty -e ranger
+bindsym $mod+l exec i3lock-fancy
+exec_always --no-startup-id /home/zorinos/Downloads/i3-auto-layout
 exec --no-startup-id nitrogen --restore
-
-#Screenshots in files
-bindsym $mod+Print exec --no-startup-id maim --format=png "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png"
-bindsym $mod+Shift+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-current.png"
-bindsym Shift+Print exec --no-startup-id maim --format=png --select "/home/$USER/Pictures/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-selected.png"
-
-## Screenshots in clipboards
-bindsym Ctrl+Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
-bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-bindsym Ctrl+Shift+Print exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+exec_always --no-startup-id bash killall i3bar
