@@ -8,3 +8,6 @@ cp $HOME/dotfiles/i3/conf $HOME/.config/i3/conf -r
 
 # Move polybar
 cp $HOME/dotfiles/polybar $HOME/.config -r
+
+# Move Rofi
+cp $HOME/dotfiles/rofi $HOME/.config -r
